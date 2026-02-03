@@ -8,7 +8,6 @@ from mlx_lm.utils import quantize_model
 
 from mlx_vlm.utils import (
     StoppingCriteria,
-    get_class_predicate,
     load,
     prepare_inputs,
     process_inputs_with_fallback,
@@ -153,6 +152,8 @@ def test_get_class_predicate():
             self.weight = mx.zeros(shape)
             self.to_quantized = True
 
+    from mlx_vlm.utils import get_class_predicate
+
     # Test skip_vision=True
     pred = get_class_predicate(skip_vision=True)
     module = DummyModule((10, 64))
@@ -182,6 +183,7 @@ def test_get_class_predicate():
     pred = get_class_predicate(skip_vision=False, weights=weights)
     assert pred("language_model", DummyModule((10, 64))) is True
     assert pred("vision_model", DummyModule((10, 63))) is False
+
 
 
 def test_quantize_module():
